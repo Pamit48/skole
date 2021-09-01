@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.0/Draggable.min.js"></script>
+    <style>
+        html {
+            width: 500px;
+            height: 500px;
+        }
+        #mario {
+            position: absolute;
+            top:500px;
+            left:500px;
+            width:50px;
+            height: 50px;
+        }
+        #ball {
+            position: absolute;
+            top:200px;
+            left:500px;
+            width:30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<script>
+
+    window.onload=oppstart;
+    function oppstart() {
+        let score = 0;
+        let height = 50;
+        let width = 50;
+        document.onkeydown=mariomove;
+
+        function mariomove(evt){
+            let tast = evt.code;
+
+            if (tast==="ArrowUp") {
+                gsap.set("#mario", {top: "-=30"});
+                document.getElementById("mario").src="bilder/Up.png"
+            }
+            if (tast==="ArrowDown") {
+                gsap.set("#mario", {top: "+=30"});
+                document.getElementById("mario").src="bilder/Down.png"
+            }
+            if (tast==="ArrowLeft") {
+                gsap.set("#mario", {left: "-=30"});
+                document.getElementById("mario").src="bilder/Left.png"
+            }
+            if (tast==="ArrowRight") {
+                gsap.set("#mario", {left: "+=30"});
+                document.getElementById("mario").src="bilder/Right.png"
+            }
+            if (tast==="Space") {
+                gsap.set("#mario", {left: "+=30",top: "-=30"} );
+                document.getElementById("mario").src="bilder/egg.png"
+            }
+            if(Draggable.hitTest("#ball","#mario","1%")) {
+                score++
+                document.getElementById("score").innerHTML = "Score:" + score;
+                document.getElementById("ball").style.top=(Math.random()*500).toString()+"px";
+                document.getElementById("ball").style.left=(Math.random()*800).toString()+"px";
+                document.getElementById("mario").style.height=(height+=20).toString()+"px";
+                document.getElementById("mario").style.width=(width+=20).toString()+"px";
+            }
+            if (score>9) {
+                window.location.replace("endscreen.html");
+            }
+
+        }
+
+
+    }
+</script>
+<body>
+<img id="ball" src="bilder/sopp.png">
+<p id="score"> Score:0 </p>
+<img id="mario" src="bilder/Front.PNG">
+<img id="endscreen">
+
+
+</body>
+</html>
